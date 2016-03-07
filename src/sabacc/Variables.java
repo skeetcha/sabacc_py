@@ -8,4 +8,6 @@ public class Variables
 	public static int sabaccPot = 0;
 	
 	public static ArrayList<Player> players = new ArrayList<Player>();
+	
+	public static ArrayList<Card> cards = new ArrayList<Card>();
 }

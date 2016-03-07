@@ -3,6 +3,8 @@ package sabacc.computer;
 import java.util.Scanner;
 import sabacc.Player;
 import sabacc.Variables;
+import sabacc.Card;
+import java.util.Random;
 
 public class Computer
 {
@@ -44,6 +46,13 @@ public class Computer
 		}
 		
 		scanner.close();
+		
+		bettingRound(); // Round 1 is Betting
+		cardSetup();
+		dealTwoCardsToEach();
+		hitOrStand(); // Round 2 is Hit or Stand
+		bettingRound(); // Round 3 is Betting
+		hitOrStand(); // Round 4 is Hit or Stand
 	}
 	
 	public void bettingRound()
@@ -85,7 +94,7 @@ public class Computer
 					System.out.println("You have folded. You may not bet.");
 				}
 			}
-			else if (i == 1)
+			else
 			{
 				if (!Variables.players.get(i).bombedout && !Variables.players.get(i).fold)
 				{
@@ -118,7 +127,12 @@ public class Computer
 							bets[i] = bets[i - 1] + ans1;
 							Variables.players.get(i).money -= bets[i];
 							bets[i - 1] = bets[i];
-							Variables.players.get(i - 1).money -= ans1;
+							
+							for (int j = 0; j < i; j++)
+							{
+								Variables.players.get(j).money -= ans1;
+							}
+							
 							break;
 						}
 						else
@@ -139,5 +153,205 @@ public class Computer
 		}
 		
 		scanner.close();
+	}
+	
+	public void cardSetup()
+	{
+		// Suits
+		// 0: Saber
+		// 1: Flask
+		// 2: Coin
+		// 3: Stave
+		
+		// Parameters:
+		// String name, null for non-special cards
+		// int value
+		// int suit, -1 for special cards
+		// int copy, -1 for non-special cards
+		// boolean face
+		
+		Variables.cards.add(new Card(null, 1, 0, -1, false)); // 1 of Sabers
+		Variables.cards.add(new Card(null, 2, 0, -1, false)); // 2 of Sabers
+		Variables.cards.add(new Card(null, 3, 0, -1, false)); // 3 of Sabers
+		Variables.cards.add(new Card(null, 4, 0, -1, false)); // 4 of Sabers
+		Variables.cards.add(new Card(null, 5, 0, -1, false)); // 5 of Sabers
+		Variables.cards.add(new Card(null, 6, 0, -1, false)); // 6 of Sabers
+		Variables.cards.add(new Card(null, 7, 0, -1, false)); // 7 of Sabers
+		Variables.cards.add(new Card(null, 8, 0, -1, false)); // 8 of Sabers
+		Variables.cards.add(new Card(null, 9, 0, -1, false)); // 9 of Sabers
+		Variables.cards.add(new Card(null, 10, 0, -1, false)); // 10 of Sabers
+		Variables.cards.add(new Card(null, 11, 0, -1, false)); // 11 of Sabers
+		Variables.cards.add(new Card("Commander", 12, 0, -1, true)); // Commander of Sabers
+		Variables.cards.add(new Card("Mistress", 13, 0, -1, true)); // Mistress of Sabers
+		Variables.cards.add(new Card("Master", 14, 0, -1, true)); // Master of Sabers
+		Variables.cards.add(new Card("Ace", 15, 0, -1, true)); // Ace of Sabers
+		
+		Variables.cards.add(new Card(null, 1, 1, -1, false)); // 1 of Flasks
+		Variables.cards.add(new Card(null, 2, 1, -1, false)); // 2 of Flasks
+		Variables.cards.add(new Card(null, 3, 1, -1, false)); // 3 of Flasks
+		Variables.cards.add(new Card(null, 4, 1, -1, false)); // 4 of Flasks
+		Variables.cards.add(new Card(null, 5, 1, -1, false)); // 5 of Flasks
+		Variables.cards.add(new Card(null, 6, 1, -1, false)); // 6 of Flasks
+		Variables.cards.add(new Card(null, 7, 1, -1, false)); // 7 of Flasks
+		Variables.cards.add(new Card(null, 8, 1, -1, false)); // 8 of Flasks
+		Variables.cards.add(new Card(null, 9, 1, -1, false)); // 9 of Flasks
+		Variables.cards.add(new Card(null, 10, 1, -1, false)); // 10 of Flasks
+		Variables.cards.add(new Card(null, 11, 1, -1, false)); // 11 of Flasks
+		Variables.cards.add(new Card("Commander", 12, 1, -1, true)); // Commander of Flasks
+		Variables.cards.add(new Card("Mistress", 13, 1, -1, true)); // Mistress of Flasks
+		Variables.cards.add(new Card("Master", 14, 1, -1, true)); // Master of Flasks
+		Variables.cards.add(new Card("Ace", 15, 1, -1, true)); // Ace of Flasks
+		
+		Variables.cards.add(new Card(null, 1, 2, -1, false)); // 1 of Coins
+		Variables.cards.add(new Card(null, 2, 2, -1, false)); // 2 of Coins
+		Variables.cards.add(new Card(null, 3, 2, -1, false)); // 3 of Coins
+		Variables.cards.add(new Card(null, 4, 2, -1, false)); // 4 of Coins
+		Variables.cards.add(new Card(null, 5, 2, -1, false)); // 5 of Coins
+		Variables.cards.add(new Card(null, 6, 2, -1, false)); // 6 of Coins
+		Variables.cards.add(new Card(null, 7, 2, -1, false)); // 7 of Coins
+		Variables.cards.add(new Card(null, 8, 2, -1, false)); // 8 of Coins
+		Variables.cards.add(new Card(null, 9, 2, -1, false)); // 9 of Coins
+		Variables.cards.add(new Card(null, 10, 2, -1, false)); // 10 of Coins
+		Variables.cards.add(new Card(null, 11, 2, -1, false)); // 11 of Coins
+		Variables.cards.add(new Card("Commander", 12, 2, -1, true)); // Commander of Coins
+		Variables.cards.add(new Card("Mistress", 13, 2, -1, true)); // Mistress of Coins
+		Variables.cards.add(new Card("Master", 14, 2, -1, true)); // Master of Coins
+		Variables.cards.add(new Card("Ace", 15, 2, -1, true)); // Ace of Coins
+		
+		Variables.cards.add(new Card(null, 1, 3, -1, false)); // 1 of Staves
+		Variables.cards.add(new Card(null, 2, 3, -1, false)); // 2 of Staves
+		Variables.cards.add(new Card(null, 3, 3, -1, false)); // 3 of Staves
+		Variables.cards.add(new Card(null, 4, 3, -1, false)); // 4 of Staves
+		Variables.cards.add(new Card(null, 5, 3, -1, false)); // 5 of Staves
+		Variables.cards.add(new Card(null, 6, 3, -1, false)); // 6 of Staves
+		Variables.cards.add(new Card(null, 7, 3, -1, false)); // 7 of Staves
+		Variables.cards.add(new Card(null, 8, 3, -1, false)); // 8 of Staves
+		Variables.cards.add(new Card(null, 9, 3, -1, false)); // 9 of Staves
+		Variables.cards.add(new Card(null, 10, 3, -1, false)); // 10 of Staves
+		Variables.cards.add(new Card(null, 11, 3, -1, false)); // 11 of Staves
+		Variables.cards.add(new Card("Commander", 12, 3, -1, true)); // Commander of Staves
+		Variables.cards.add(new Card("Mistress", 13, 3, -1, true)); // Mistress of Staves
+		Variables.cards.add(new Card("Master", 14, 3, -1, true)); // Master of Staves
+		
+		Variables.cards.add(new Card("The Star", -17, -1, 0, false)); // The Star (copy 1)
+		Variables.cards.add(new Card("The Star", -17, -1, 1, false)); // The Star (copy 2)
+		
+		Variables.cards.add(new Card("The Evil One", -15, -1, 0, false)); // The Evil One (copy 1)
+		Variables.cards.add(new Card("The Evil One", -15, -1, 1, false)); // The Evil One (copy 2)
+		
+		Variables.cards.add(new Card("Moderation", -14, -1, 0, false)); // Moderation (copy 1)
+		Variables.cards.add(new Card("Moderation", -14, -1, 1, false)); // Moderation (copy 2)
+		
+		Variables.cards.add(new Card("Demise", -13, -1, 0, false)); // Demise (copy 1)
+		Variables.cards.add(new Card("Demise", -13, -1, 1, false)); // Demise (copy 2)
+		
+		Variables.cards.add(new Card("Balance", -11, -1, 0, false)); // Balance (copy 1)
+		Variables.cards.add(new Card("Balance", -11, -1, 1, false)); // Balance (copy 2)
+		
+		Variables.cards.add(new Card("Endurance", -8, -1, 0, false)); // Endurance (copy 1)
+		Variables.cards.add(new Card("Endurance", -8, -1, 1, false)); // Endurance (copy 2)
+		
+		Variables.cards.add(new Card("Queen of Air and Darkness", -2, -1, 0, false)); // Queen of Air and Darkness (copy 1)
+		Variables.cards.add(new Card("Queen of Air and Darkness", -2, -1, 1, false)); // Queen of Air and Darkness (copy 2)
+		
+		Variables.cards.add(new Card("Idiot", 0, -1, 0, false)); // Idiot (copy 1)
+		Variables.cards.add(new Card("Idiot", 0, -1, 1, false)); // Idiot (copy 2)
+	}
+	
+	public void dealTwoCardsToEach()
+	{
+		for (int i = 0; i < Variables.players.size(); i++)
+		{
+			Random rand = new Random();
+			
+			int randNum = rand.nextInt(Variables.cards.size());
+			Variables.players.get(i).hand.add(Variables.cards.get(randNum));
+			Variables.cards.remove(randNum);
+			
+			randNum = rand.nextInt(Variables.cards.size());
+			Variables.players.get(i).hand.add(Variables.cards.get(randNum));
+			Variables.cards.remove(randNum);
+		}
+	}
+	
+	public void hitOrStand()
+	{
+		for (int i = 0; i < Variables.players.size(); i++)
+		{
+			int score = 0;
+			
+			for (int j = 0; j < Variables.players.get(i).hand.size(); j++)
+			{
+				score += Variables.players.get(i).hand.get(j).value;
+			}
+			
+			System.out.println("Player " + (i + 1) + ", your cards have a score of " + score + ".");
+			
+			Scanner scanner = new Scanner(System.in);
+			System.out.println("Would you like to hit or stand?");
+			
+			while (true)
+			{
+				String ans = scanner.nextLine();
+				
+				if (ans.equalsIgnoreCase("hit"))
+				{
+					score = 0;
+					
+					for (int j = 0; j < Variables.players.get(i).hand.size(); j++)
+					{
+						score += Variables.players.get(i).hand.get(j).value;
+						
+						if (score > 23)
+						{
+							Variables.players.get(i).bombedout = true;
+							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
+							break;
+						}
+						else if (score < -23)
+						{
+							Variables.players.get(i).bombedout = true;
+							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
+							break;
+						}
+					}
+					
+					Random rand = new Random();
+					int randNum = rand.nextInt(Variables.cards.size());
+					Variables.players.get(i).hand.add(Variables.cards.get(randNum));
+					
+					score = 0;
+					
+					for (int j = 0; j < Variables.players.get(i).hand.size(); j++)
+					{
+						score += Variables.players.get(i).hand.get(j).value;
+						
+						if (score > 23)
+						{
+							Variables.players.get(i).bombedout = true;
+							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
+							break;
+						}
+						else if (score < -23)
+						{
+							Variables.players.get(i).bombedout = true;
+							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
+							break;
+						}
+					}
+				}
+				else if (ans.equalsIgnoreCase("stand"))
+				{
+					Variables.players.get(i).fold = true;
+					break;
+				}
+				else
+				{
+					System.out.println("That is not an acceptable answer.");
+				}
+			}
+			
+			scanner.close();
+		}
 	}
 }
