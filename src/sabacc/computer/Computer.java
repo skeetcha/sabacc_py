@@ -53,6 +53,7 @@ public class Computer
 		hitOrStand(); // Round 2 is Hit or Stand
 		bettingRound(); // Round 3 is Betting
 		hitOrStand(); // Round 4 is Hit or Stand
+		decideCalling(); // Round 5 is Calling
 	}
 	
 	public void bettingRound()
@@ -232,6 +233,7 @@ public class Computer
 		Variables.cards.add(new Card("Commander", 12, 3, -1, true)); // Commander of Staves
 		Variables.cards.add(new Card("Mistress", 13, 3, -1, true)); // Mistress of Staves
 		Variables.cards.add(new Card("Master", 14, 3, -1, true)); // Master of Staves
+		Variables.cards.add(new Card("Ace", 15, 3, -1, true)); // Ace of Staves
 		
 		Variables.cards.add(new Card("The Star", -17, -1, 0, false)); // The Star (copy 1)
 		Variables.cards.add(new Card("The Star", -17, -1, 1, false)); // The Star (copy 2)
@@ -296,49 +298,9 @@ public class Computer
 				
 				if (ans.equalsIgnoreCase("hit"))
 				{
-					score = 0;
-					
-					for (int j = 0; j < Variables.players.get(i).hand.size(); j++)
-					{
-						score += Variables.players.get(i).hand.get(j).value;
-						
-						if (score > 23)
-						{
-							Variables.players.get(i).bombedout = true;
-							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
-							break;
-						}
-						else if (score < -23)
-						{
-							Variables.players.get(i).bombedout = true;
-							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
-							break;
-						}
-					}
-					
 					Random rand = new Random();
 					int randNum = rand.nextInt(Variables.cards.size());
 					Variables.players.get(i).hand.add(Variables.cards.get(randNum));
-					
-					score = 0;
-					
-					for (int j = 0; j < Variables.players.get(i).hand.size(); j++)
-					{
-						score += Variables.players.get(i).hand.get(j).value;
-						
-						if (score > 23)
-						{
-							Variables.players.get(i).bombedout = true;
-							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
-							break;
-						}
-						else if (score < -23)
-						{
-							Variables.players.get(i).bombedout = true;
-							System.out.println("Player " + (i + 1) + " has bombed out. Their score is " + score + ".");
-							break;
-						}
-					}
 				}
 				else if (ans.equalsIgnoreCase("stand"))
 				{
@@ -352,6 +314,47 @@ public class Computer
 			}
 			
 			scanner.close();
+		}
+	}
+	
+	public void decideCalling()
+	{
+		for (int i = 0; i < Variables.players.size(); i++)
+		{
+			System.out.println("Player " + (i + 1) + ", would you like to call?");
+			Scanner scanner = new Scanner(System.in);
+			
+			while (true)
+			{
+				String ans = scanner.nextLine();
+				
+				if (ans.equalsIgnoreCase("yes"))
+				{
+					System.out.println("The calling round has begun!");
+					callingRound(i);
+					break;
+				}
+				else if (ans.equalsIgnoreCase("no"))
+				{
+					System.out.println("Player " + (i + 1) + " has decided not to call.");
+					System.out.println("Next player.");
+					break;
+				}
+				else
+				{
+					System.out.println("That is not an acceptable answer.");
+				}
+			}
+			
+			scanner.close();
+		}
+	}
+	
+	public void callingRound(int playerRef)
+	{
+		for (int i = 0; i < Variables.players.get(playerRef).hand.size(); i++)
+		{
+			
 		}
 	}
 }
