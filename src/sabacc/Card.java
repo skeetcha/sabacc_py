@@ -7,6 +7,7 @@ public class Card
 	public int suit; // -1 for special cards
 	public int copy; // -1 for non special cards
 	public boolean face;
+	public boolean interField = false; // Is true for cards in the Interference Field
 	
 	public Card(String n, int v, int s, int c, boolean f)
 	{

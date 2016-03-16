@@ -504,8 +504,187 @@ public class Computer
 			}
 		}
 		
-		Player[] winningHands = new Player[Variables.players.size()];
+		Player[] winningHands = new Player[3];
 		
+		for (int i = 0; i < Variables.players.size(); i++)
+		{
+			if (Variables.players.get(i).score == 23)
+			{
+				winningHands[1] = Variables.players.get(i);
+			}
+			else if (Variables.players.get(i).score == -23)
+			{
+				winningHands[2] = Variables.players.get(i);
+			}
+			else
+			{
+				boolean idiot = false;
+				boolean two = false;
+				boolean three = false;
+				boolean sameSuit = false;
+				int suit = -1;
+				
+				for (int j = 0; j < Variables.players.get(i).hand.size(); j++)
+				{
+					if (Variables.players.get(i).hand.get(j).name == "Idiot")
+					{
+						idiot = true;
+					}
+					else if (Variables.players.get(i).hand.get(j).value == 2 && Variables.players.get(i).hand.get(j).name == null)
+					{
+						two = true;
+						
+						if (three)
+						{
+							if (Variables.players.get(i).hand.get(j).suit == suit)
+							{
+								sameSuit = true;
+							}
+							else
+							{
+								sameSuit = false;
+							}
+						}
+						else
+						{
+							suit = Variables.players.get(i).hand.get(j).suit;
+						}
+					}
+					else if (Variables.players.get(i).hand.get(j).value == 3 && Variables.players.get(i).hand.get(j).name == null)
+					{
+						three = true;
+						
+						if (two)
+						{
+							if (Variables.players.get(i).hand.get(j).suit == suit)
+							{
+								sameSuit = true;
+							}
+							else
+							{
+								sameSuit = false;
+							}
+						}
+						else
+						{
+							suit = Variables.players.get(i).hand.get(j).suit;
+						}
+					}
+				}
+				
+				if (idiot && two && three && sameSuit)
+				{
+					winningHands[0] = Variables.players.get(i);
+				}
+			}
+		}
 		
+		boolean noIdiotsArray = true;
+		boolean noPositivePureSabacc = true;
+		boolean noNegativePureSabacc = true;
+		
+		if (winningHands[0] != null)
+		{
+			noIdiotsArray = false;
+		}
+		else if (winningHands[1] != null)
+		{
+			noPositivePureSabacc = false;
+		}
+		else if (winningHands[2] != null)
+		{
+			noNegativePureSabacc = false;
+		}
+		
+		if (!noIdiotsArray)
+		{
+			int num = 0;
+			
+			for (int i = 0; i < Variables.players.size(); i++)
+			{
+				if (winningHands[0] == Variables.players.get(i))
+				{
+					num = i;
+				}
+			}
+			
+			System.out.print("Player ");
+			System.out.print(num + 1);
+			System.out.println(" has won with an Idiot's Array!");
+			Variables.players.get(num).money += Variables.mainPot;
+			Variables.mainPot = 0;
+			Variables.players.get(num).money += Variables.sabaccPot;
+			Variables.sabaccPot = 0;
+			System.out.print("Player ");
+			System.out.print(num + 1);
+			System.out.print(" collects the Sabacc Pot and the Main Pot, bringing their wealth to ");
+			System.out.print(Variables.players.get(num).money);
+			System.out.println(" credits.");
+		}
+		else
+		{
+			if (!noPositivePureSabacc)
+			{
+				int num = 0;
+				
+				for (int i = 0; i < Variables.players.size(); i++)
+				{
+					if (winningHands[1] == Variables.players.get(i))
+					{
+						num = i;
+					}
+				}
+				
+				System.out.print("Player ");
+				System.out.print(num + 1);
+				System.out.println(" has won with a Pure Sabacc (23)!");
+				Variables.players.get(num).money += Variables.mainPot;
+				Variables.mainPot = 0;
+				Variables.players.get(num).money += Variables.sabaccPot;
+				Variables.sabaccPot = 0;
+				System.out.print("Player ");
+				System.out.print(num + 1);
+				System.out.print(" collects the Sabacc Pot and the Main Pot, bringing their wealth to ");
+				System.out.print(Variables.players.get(num).money);
+				System.out.println(" credits.");
+			}
+			else
+			{
+				if (!noNegativePureSabacc)
+				{
+					int num = 0;
+					
+					for (int i = 0; i < Variables.players.size(); i++)
+					{
+						if (winningHands[2] == Variables.players.get(i))
+						{
+							num = i;
+						}
+					}
+					
+					System.out.print("Player ");
+					System.out.print(num + 1);
+					System.out.println(" has won with a Pure Sabacc (-23)!");
+					Variables.players.get(num).money += Variables.mainPot;
+					Variables.mainPot = 0;
+					Variables.players.get(num).money += Variables.sabaccPot;
+					Variables.sabaccPot = 0;
+					System.out.print("Player ");
+					System.out.print(num + 1);
+					System.out.print(" collects the Sabacc Pot and the Main Pot, bringing their wealth to ");
+					System.out.print(Variables.players.get(num).money);
+					System.out.println(" credits.");
+				}
+				else
+				{
+					int[] scores = new int[Variables.players.size()];
+					
+					for (int i = 0; i < Variables.players.size(); i++)
+					{
+						scores[i] = Variables.players.get(i).score;
+					}
+				}
+			}
+		}
 	}
 }
