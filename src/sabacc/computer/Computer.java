@@ -683,6 +683,82 @@ public class Computer
 					{
 						scores[i] = Variables.players.get(i).score;
 					}
+					
+					int smallest = scores[0];
+					int largest = scores[0];
+					
+					for (int i = 1; i < scores.length; i++)
+					{
+						if (scores[i] > largest)
+						{
+							largest = scores[i];
+						}
+						else if (scores[i] < smallest)
+						{
+							smallest = scores[i];
+						}
+					}
+					
+					if (largest == Math.abs(smallest))
+					{
+						int num = 0;
+						
+						for (int i = 0; i < Variables.players.size(); i++)
+						{
+							if (largest == Variables.players.get(i).score)
+							{
+								num = i;
+							}
+						}
+						
+						System.out.print("Player ");
+						System.out.print(num + 1);
+						System.out.print(" won the game by having the largest hand with a score of ");
+						System.out.print(Variables.players.get(num).score);
+						System.out.println(". They collect the Main Pot only.");
+						Variables.players.get(num).money += Variables.mainPot;
+						Variables.mainPot = 0;
+					}
+					else if (largest > Math.abs(smallest))
+					{
+						int num = 0;
+						
+						for (int i = 0; i < Variables.players.size(); i++)
+						{
+							if (largest == Variables.players.get(i).score)
+							{
+								num = i;
+							}
+						}
+						
+						System.out.print("Player ");
+						System.out.print(num + 1);
+						System.out.print(" won the game by having the largest hand with a score of ");
+						System.out.print(Variables.players.get(num).score);
+						System.out.println(". They collect the Main Pot only.");
+						Variables.players.get(num).money += Variables.mainPot;
+						Variables.mainPot = 0;
+					}
+					else if (largest < Math.abs(smallest))
+					{
+						int num = 0;
+						
+						for (int i = 0; i < Variables.players.size(); i++)
+						{
+							if (largest == Variables.players.get(i).score)
+							{
+								num = i;
+							}
+						}
+						
+						System.out.print("Player ");
+						System.out.print(num + 1);
+						System.out.print(" won the game by having the largest hand with a score of ");
+						System.out.print(Variables.players.get(num).score);
+						System.out.println(". They collect the Main Pot only.");
+						Variables.players.get(num).money += Variables.mainPot;
+						Variables.mainPot = 0;
+					}
 				}
 			}
 		}
