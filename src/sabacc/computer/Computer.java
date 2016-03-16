@@ -26,7 +26,7 @@ public class Computer
 			for (int i = 0; i < ans; i++)
 			{
 				Variables.players.add(new Player());
-				Variables.players.get(i).money = 0;
+				Variables.players.get(i).money = 100;
 			}
 			
 			System.out.println("There are " + ans + " players.");
@@ -54,6 +54,7 @@ public class Computer
 		bettingRound(); // Round 3 is Betting
 		hitOrStand(); // Round 4 is Hit or Stand
 		decideCalling(); // Round 5 is Calling
+		endRound(); // Decide who one the Round
 	}
 	
 	public void bettingRound()
@@ -350,11 +351,161 @@ public class Computer
 		}
 	}
 	
-	public void callingRound(int playerRef)
+	public void callingRound(int beginningPlayer)
 	{
+		if (beginningPlayer == Variables.players.size())
+		{
+			callingPlayer(beginningPlayer);
+			
+			for (int i = 0; i < Variables.players.size() - 1; i++)
+			{
+				callingPlayer(i);
+			}
+		}
+		else if (beginningPlayer == 0)
+		{
+			for (int i = 0; i < Variables.players.size(); i++)
+			{
+				callingPlayer(i);
+			}
+		}
+		else
+		{
+			for (int i = beginningPlayer; i < Variables.players.size(); i++)
+			{
+				callingPlayer(i);
+			}
+			
+			for (int i = 0; i < beginningPlayer; i++)
+			{
+				callingPlayer(i);
+			}
+		}
+	}
+	
+	public void callingPlayer(int playerRef)
+	{
+		System.out.print("Player ");
+		System.out.print(playerRef + 1);
+		System.out.print(" has ");
+		
 		for (int i = 0; i < Variables.players.get(playerRef).hand.size(); i++)
 		{
-			
+			if (Variables.players.get(playerRef).hand.get(i).name == null)
+			{
+				// Not a special or face card
+				System.out.print("The ");
+				System.out.print(Variables.players.get(playerRef).hand.get(i).value);
+				System.out.print(" of ");
+				
+				if (Variables.players.get(playerRef).hand.get(i).suit == 0)
+				{
+					System.out.print("Sabers, ");
+				}
+				else if (Variables.players.get(playerRef).hand.get(i).suit == 1)
+				{
+					System.out.print("Flasks, ");
+				}
+				else if (Variables.players.get(playerRef).hand.get(i).suit == 2)
+				{
+					System.out.print("Coins, ");
+				}
+				else if (Variables.players.get(playerRef).hand.get(i).suit == 3)
+				{
+					System.out.print("Staves, ");
+				}
+			}
+			else
+			{
+				if (Variables.players.get(playerRef).hand.get(i).face)
+				{
+					// Face card
+					System.out.print("The ");
+					System.out.print(Variables.players.get(playerRef).hand.get(i).name);
+					System.out.print(" of ");
+					
+					if (Variables.players.get(playerRef).hand.get(i).suit == 0)
+					{
+						System.out.print("Sabers, ");
+					}
+					else if (Variables.players.get(playerRef).hand.get(i).suit == 1)
+					{
+						System.out.print("Flasks, ");
+					}
+					else if (Variables.players.get(playerRef).hand.get(i).suit == 2)
+					{
+						System.out.print("Coins, ");
+					}
+					else if (Variables.players.get(playerRef).hand.get(i).suit == 3)
+					{
+						System.out.print("Staves, ");
+					}
+				}
+				else
+				{
+					// Special card
+					System.out.print("The ");
+					System.out.print(Variables.players.get(playerRef).hand.get(i).copy + 1);
+					
+					if (Variables.players.get(playerRef).hand.get(i).copy == 0)
+					{
+						System.out.print("st ");
+					}
+					else if (Variables.players.get(playerRef).hand.get(i).copy == 1)
+					{
+						System.out.print("nd ");
+					}
+					
+					System.out.print(" copy of ");
+					System.out.print(Variables.players.get(playerRef).hand.get(i).name);
+					System.out.print(", ");
+				}
+			}
 		}
+		
+		int score = 0;
+		
+		for (int i = 0; i < Variables.players.get(playerRef).hand.size(); i++)
+		{
+			score += Variables.players.get(playerRef).hand.get(i).value;
+		}
+		
+		System.out.print(" with a score of ");
+		System.out.print(score);
+		System.out.println(".");
+		
+		if (score > 23 || score < -23)
+		{
+			System.out.print("Player ");
+			System.out.print(playerRef + 1);
+			System.out.println(" has bombed out!");
+			Variables.players.get(playerRef).bombedout = true;
+			Variables.players.get(playerRef).money -= Variables.mainPot;
+			Variables.sabaccPot += Variables.mainPot;
+		}
+	}
+	
+	public void endRound()
+	{
+		for (int i = 0; i < Variables.players.size(); i++)
+		{
+			if (Variables.players.get(i).bombedout)
+			{
+				System.out.print("Player ");
+				System.out.print(i + 1);
+				System.out.print(" has bombed out. They do not win.");
+			}
+			else
+			{
+				for (int j = 0; j < Variables.players.get(i).hand.size(); j++)
+				{
+					Variables.players.get(i).score += Variables.players.get(i).hand.get(j).value;
+				}
+			}
+		}
+		
+		Player[] winningHands = new Player[Variables.players.size()];
+		
+		
 	}
 }

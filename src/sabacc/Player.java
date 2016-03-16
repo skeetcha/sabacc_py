@@ -9,4 +9,5 @@ public class Player
 	public boolean fold = false;
 	public boolean bombedout = false;
 	public ArrayList<Card> hand = new ArrayList<Card>();
+	public int score = 0;
 }
