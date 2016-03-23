@@ -1,4 +1,4 @@
-package sabacc.computer;
+package sabacc;
 
 import java.util.Scanner;
 import sabacc.Player;
@@ -47,6 +47,7 @@ public class Computer
 		
 		scanner.close();
 		
+		Variables.callingPhase = false;
 		bettingRound(); // Round 1 is Betting
 		cardSetup();
 		dealTwoCardsToEach();
@@ -353,6 +354,8 @@ public class Computer
 	
 	public void callingRound(int beginningPlayer)
 	{
+		Variables.callingPhase = true;
+		
 		if (beginningPlayer == Variables.players.size())
 		{
 			callingPlayer(beginningPlayer);

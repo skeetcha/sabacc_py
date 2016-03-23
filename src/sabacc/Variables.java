@@ -10,4 +10,6 @@ public class Variables
 	public static ArrayList<Player> players = new ArrayList<Player>();
 	
 	public static ArrayList<Card> cards = new ArrayList<Card>();
+	
+	public static boolean callingPhase = false;
 }

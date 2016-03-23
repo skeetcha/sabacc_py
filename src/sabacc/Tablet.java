@@ -1,4 +1,4 @@
-package sabacc.tablet;
+package sabacc;
 
 public class Tablet
 {

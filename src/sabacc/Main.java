@@ -1,7 +1,5 @@
 package sabacc;
 
-import sabacc.computer.Computer;
-import sabacc.tablet.Tablet;
 import java.util.Scanner;
 
 public class Main
