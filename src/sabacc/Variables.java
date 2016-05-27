@@ -12,4 +12,8 @@ public class Variables
 	public static ArrayList<Card> cards = new ArrayList<Card>();
 	
 	public static boolean callingPhase = false;
+	
+	public static int shiftNum = 0;
+	public static int shiftAmount = 0;
+	public static int timeSeed = 0;
 }

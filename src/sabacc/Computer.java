@@ -6,9 +6,11 @@ import sabacc.Variables;
 import sabacc.Card;
 import java.util.Random;
 
-public class Computer
+public class Computer implements Runnable
 {
-	public void start()
+	private Thread t;
+	
+	public void game()
 	{
 		System.out.println("Now running in Computer Mode...");
 		Scanner scanner = new Scanner(System.in);
@@ -765,5 +767,22 @@ public class Computer
 				}
 			}
 		}
+	}
+	
+	public void start()
+	{
+		System.out.println("Starting Game Thread");
+		
+		if (t == null)
+		{
+			t = new Thread(this, "Game");
+			t.start();
+		}
+	}
+
+	@Override
+	public void run()
+	{
+		this.game();
 	}
 }
