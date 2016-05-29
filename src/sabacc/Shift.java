@@ -23,7 +23,50 @@ public class Shift implements Runnable
 			{
 				if ((!Variables.cards.get(i).face) && (Variables.cards.get(i).copy == -1) && (Variables.cards.get(i).name == null) && (!Variables.cards.get(i).interField))
 				{
-					
+					Variables.cards.get(i).value += Variables.shiftAmount;
+				}
+				else if ((!Variables.cards.get(i).face) && (Variables.cards.get(i).copy == -1) && (Variables.cards.get(i).name == null) && (!Variables.cards.get(i).interField) && ((Variables.cards.get(i).value + Variables.shiftAmount) > 11))
+				{
+					if ((Variables.cards.get(i).value + Variables.shiftAmount) == 12)
+					{
+						Card c = Variables.cards.get(i);
+						c.name = "Commander";
+						c.value = 12;
+						c.face = true;
+						Variables.cards.set(i, c);
+					}
+					else if ((Variables.cards.get(i).value + Variables.shiftAmount) == 13)
+					{
+						Card c = Variables.cards.get(i);
+						c.name = "Mistress";
+						c.value = 13;
+						c.face = true;
+						Variables.cards.set(i, c);
+					}
+					else if ((Variables.cards.get(i).value + Variables.shiftAmount) == 14)
+					{
+						Card c = Variables.cards.get(i);
+						c.name = "Master";
+						c.value = 14;
+						c.face = true;
+						Variables.cards.set(i, c);
+					}
+					else if ((Variables.cards.get(i).value + Variables.shiftAmount == 15))
+					{
+						Card c = Variables.cards.get(i);
+						c.name = "Ace";
+						c.value = 15;
+						c.face = true;
+						Variables.cards.set(i, c);
+					}
+					else if ((Variables.cards.get(i).value + Variables.shiftAmount) > 15)
+					{
+						Card c = Variables.cards.get(i);
+						c.name = null;
+						c.value = (c.value + Variables.shiftAmount) - 15;
+						c.face = false;
+						Variables.cards.set(i, c);
+					}
 				}
 				else if (Variables.cards.get(i).face)
 				{
