@@ -1,2 +1,2 @@
 # sabacc
-Sabacc for Computer and Mobile Phones
+Sabacc for Raspberry Pi and Mobile Phones
